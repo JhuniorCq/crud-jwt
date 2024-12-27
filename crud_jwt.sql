@@ -1,0 +1,12 @@
+DROP DATABASE IF EXISTS crud_jwt;
+
+CREATE DATABASE crud_jwt;
+
+USE crud_jwt;
+
+CREATE TABLE user (
+	id CHAR(36) PRIMARY KEY,
+	username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL
+);
