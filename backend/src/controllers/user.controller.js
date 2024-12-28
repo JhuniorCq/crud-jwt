@@ -76,8 +76,23 @@ class UserController {
 
   static async logout(req, res, next) {
     try {
+      res.clearCookie("access_token").json({
+        success: true,
+        data: {
+          message: "Cierre de sesión exitoso",
+        },
+      });
     } catch (error) {
       console.error("Error en logout en user.controller.js: ", error.message);
+      next(error);
+    }
+  }
+
+  static async profile(req, res, next) {
+    try {
+      res.send("Estás en profile");
+    } catch (error) {
+      console.error("Error en profile en user.controller.js: ", error.message);
       next(error);
     }
   }

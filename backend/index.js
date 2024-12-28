@@ -2,9 +2,11 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import handleError from "./src/middlewares/handleError.js";
-import userRouter from "./src/routes/auth.routes.js";
-import { PORT } from "./src/config/config.js";
 import cookieParser from "cookie-parser";
+import userRouter from "./src/routes/auth.routes.js";
+import taskRouter from "./src/routes/task.routes.js";
+import { PORT } from "./src/config/config.js";
+import validateToken from "./src/middlewares/validateToken.js";
 
 const app = express();
 
@@ -18,10 +20,11 @@ app.use(express.json()); // Middleware para convertir el cuerpo de la solicitud 
 app.use(cookieParser()); // Middleware para convertir las cookies en un Objeto JS
 app.use(morgan("dev"));
 
-// app.get("/", (req, res) => {});
-
 // RUTAS PARA USUARIOS
 app.use("/auth", userRouter);
+
+// RUTAS PARA LAS TAREAS
+app.use("/task", /*validateToken,*/ taskRouter);
 
 // RUTA PARA MANEJAR ERROR 404
 app.use((req, res) => {

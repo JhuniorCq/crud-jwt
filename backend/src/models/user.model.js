@@ -28,7 +28,6 @@ class UserModel {
         id,
         username,
         email,
-        password,
       };
     } catch (error) {
       console.error("Error en register en user.model.js: ", error.message);
