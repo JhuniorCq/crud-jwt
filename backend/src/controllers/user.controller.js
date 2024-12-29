@@ -3,13 +3,22 @@ import { createId } from "../utils/logic.js";
 import UserModel from "../models/user.model.js";
 import Bcrypt from "../utils/bcrypt.js";
 import TokenService from "../utils/jwt.js";
+import UserValidations from "../validations/userValidations.js";
 
 class UserController {
   static async register(req, res, next) {
     try {
-      const { username, email, password } = req.body;
-
       // Validar los datos enviados por el usuario
+      const validatedUser = UserValidations.register({ user: req.body });
+      if (!validatedUser.success) {
+        const error = new Error(
+          "Error en la validación de los datos del usuario."
+        );
+        error.statusCode = 400;
+        throw error;
+      }
+
+      const { username, email, password } = validatedUser.data;
 
       // Hashear la contraseña
       const hashedPassword = await Bcrypt.hash({
@@ -42,9 +51,18 @@ class UserController {
 
   static async login(req, res, next) {
     try {
-      const { email, password } = req.body;
-
       // Validar los datos enviados por el usuario
+      const validatedUser = UserValidations.login({ user: req.body });
+
+      if (!validatedUser.success) {
+        const error = new Error(
+          "Error en la validación de los datos del usuario."
+        );
+        error.statusCode = 400;
+        throw error;
+      }
+
+      const { email, password } = validatedUser.data;
 
       const user = await UserModel.login({
         email: email.toLowerCase(),
