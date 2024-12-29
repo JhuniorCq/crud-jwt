@@ -15,7 +15,7 @@ const validateToken = (req, res, next) => {
     console.log("Validando el token ...");
 
     // Verifica la validez del token. Si el token es inválido, se lanza automáticamente un error.
-    const data = TokenService.verify(token);
+    const data = TokenService.verify({ token });
 
     // Si el token es válido, los datos decodificados se almacenan en `req.session.user`. Esto permite acceder a la información del usuario en las rutas subsiguientes.
     req.session.user = data;

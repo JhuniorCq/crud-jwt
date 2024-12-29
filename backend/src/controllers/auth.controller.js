@@ -114,7 +114,6 @@ class AuthController {
         success: true,
         data: user,
       });
-      res.send("Estás en profile");
     } catch (error) {
       console.error("Error en profile en user.controller.js: ", error.message);
       next(error);

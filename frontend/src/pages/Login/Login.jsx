@@ -47,8 +47,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (responseGet?.success) {
-      // Con esto voy a /profile
-      // TODO: Hacer el componente para profile
+      // TODO: Hacer el componente para profile y el botón de Cerrar Sesión
       navigate("/profile", { state: { user: responseGet.data } });
     }
   }, [responseGet]);
