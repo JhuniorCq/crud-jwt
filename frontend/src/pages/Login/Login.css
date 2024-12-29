@@ -1,0 +1,33 @@
+.login {
+  border: 1px solid red;
+  width: 100%;
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.login__title {
+  text-align: center;
+}
+
+.login__form {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid violet;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.login__button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: green;
+  cursor: pointer;
+  color: white;
+}

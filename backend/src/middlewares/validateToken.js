@@ -2,7 +2,7 @@ import TokenService from "../utils/jwt.js";
 
 const validateToken = (req, res, next) => {
   try {
-    const token = req.cookies.acces_token;
+    const token = req.cookies.access_token;
 
     req.session = { user: null }; // Esto es para el objeto "session" esté disponible en todas las rutas subsiguientes
 

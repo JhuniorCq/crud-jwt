@@ -1,11 +1,11 @@
 import { Router } from "express";
-import UserController from "../controllers/user.controller.js";
+import AuthController from "../controllers/auth.controller.js";
 import validateToken from "../middlewares/validateToken.js";
 const router = Router();
 
-router.post("/register", UserController.register);
-router.post("/login", UserController.login);
-router.post("/logout", UserController.logout);
-router.get("/profile", validateToken, UserController.profile);
+router.post("/register", AuthController.register);
+router.post("/login", AuthController.login);
+router.post("/logout", AuthController.logout);
+router.get("/verify", validateToken, AuthController.verify);
 
 export default router;

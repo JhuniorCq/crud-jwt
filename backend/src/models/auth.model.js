@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 import Bcrypt from "../utils/bcrypt.js";
 
-class UserModel {
+class AuthModel {
   static async register({ id, username, password, email }) {
     try {
       // Verificar si el email ya está registrado
@@ -69,4 +69,4 @@ class UserModel {
   }
 }
 
-export default UserModel;
+export default AuthModel;

@@ -16,7 +16,7 @@ class TokenService {
       return jwt.verify(token, SECRET_KEY_JWT);
     } catch (error) {
       console.error("Error al verificar el token: ", error.message);
-      throw new Error("Token inválido");
+      throw new Error("Token inválido ...");
     }
   }
 }

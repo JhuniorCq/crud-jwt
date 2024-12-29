@@ -1,11 +1,11 @@
 import { NODE_ENV, SALT_ROUNDS } from "../config/config.js";
 import { createId } from "../utils/logic.js";
-import UserModel from "../models/user.model.js";
+import AuthModel from "../models/auth.model.js";
 import Bcrypt from "../utils/bcrypt.js";
 import TokenService from "../utils/jwt.js";
 import UserValidations from "../validations/userValidations.js";
 
-class UserController {
+class AuthController {
   static async register(req, res, next) {
     try {
       // Validar los datos enviados por el usuario
@@ -32,7 +32,7 @@ class UserController {
       const id = createId();
 
       // TODO: Implementar el modelo
-      const user = await UserModel.register({
+      const user = await AuthModel.register({
         id,
         username,
         password: hashedPassword,
@@ -64,7 +64,7 @@ class UserController {
 
       const { email, password } = validatedUser.data;
 
-      const user = await UserModel.login({
+      const user = await AuthModel.login({
         email: email.toLowerCase(),
         password,
       });
@@ -106,8 +106,14 @@ class UserController {
     }
   }
 
-  static async profile(req, res, next) {
+  static async verify(req, res, next) {
     try {
+      const { user } = req.session;
+
+      res.json({
+        success: true,
+        data: user,
+      });
       res.send("Estás en profile");
     } catch (error) {
       console.error("Error en profile en user.controller.js: ", error.message);
@@ -116,4 +122,4 @@ class UserController {
   }
 }
 
-export default UserController;
+export default AuthController;
