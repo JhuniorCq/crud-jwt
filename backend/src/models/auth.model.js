@@ -46,8 +46,6 @@ class AuthModel {
         throw new Error("El email no está registrado.");
       }
 
-      console.log(user);
-
       // Verificar si la contraseña es correcta
       const isValidPassword = await Bcrypt.verify({
         password,
@@ -60,6 +58,8 @@ class AuthModel {
 
       // Quitamos la contraseña del objeto que vamos a devolver
       delete user[0].password;
+
+      console.log("Datos del usuario: ", user[0]);
 
       return user[0];
     } catch (error) {

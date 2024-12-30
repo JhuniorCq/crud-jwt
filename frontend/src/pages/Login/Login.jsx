@@ -1,18 +1,13 @@
 import { InputForm } from "../../components/InputForm/InputForm";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useId } from "react";
+import { useContext, useId } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schemas/userSchema";
 import "./Login.css";
-import { usePost } from "../../hooks/usePost";
-import { URL_SERVER } from "../../utils/constants";
-import { useManualGet } from "../../hooks/useManualGet";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 export const Login = () => {
   const id = useId();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,42 +15,24 @@ export const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
-  const { setUser } = useContext(AuthContext);
-  const { responsePost, loadingPost, errorPost, postData } = usePost();
-  const { responseGet, loadingGet, errorGet, getData } = useManualGet();
+  const { login, responseLogin, loadingLogin, errorLogin } =
+    useContext(AuthContext);
 
   const onSubmit = (data) => {
     console.log("Enviando datos... :", data);
 
-    const body = {
+    const credentials = {
       email: data.loginEmail,
       password: data.loginPassword,
     };
 
-    // Puedo hacer el POST y el GET en una sola función, pero ya NO usaría el usePost ni el useManualGet, sino que lo haría manualmente, y creo que esa función la puedo definir en el Contexto "AuthContext"
-    postData(`${URL_SERVER}/auth/login`, body, { withCredentials: true });
+    login({ credentials });
   };
 
   const onError = (errors) => {
     console.log(errors);
     alert("Por favor, complete correctamente los campos.");
   };
-
-  useEffect(() => {
-    if (responsePost?.success) {
-      // Hacemos un GET -> Aunque ya no será necesario, ya que en base a mi código del envio de la cookie, esta siempre debe enviarse, igualmente en la VISTa de /profile puedo verificar esto en el primer renderizado
-      getData(`${URL_SERVER}/auth/verify`, { withCredentials: true });
-    }
-  }, [responsePost]);
-
-  useEffect(() => {
-    if (responseGet?.success) {
-      // TODO: Hacer el componente para profile y el botón de Cerrar Sesión
-      console.log(responseGet.data);
-      setUser(responseGet.data);
-      navigate("/profile", { state: { user: responseGet.data } });
-    }
-  }, [responseGet]);
 
   return (
     <section className="login">
@@ -84,21 +61,13 @@ export const Login = () => {
 
         <button className="login__button">Iniciar Sesión</button>
 
-        {loadingPost ? (
+        {loadingLogin ? (
           <p>Cargando ...</p>
-        ) : errorPost ? (
-          <p>{errorPost}</p>
+        ) : errorLogin ? (
+          <p>{errorLogin}</p>
         ) : (
-          responsePost && <p>Usuario logueado con éxito.</p>
+          responseLogin && <p>Usuario logueado con éxito.</p>
         )}
-
-        {/* {loadingGet ? (
-          <p>Verificando ...</p>
-        ) : errorGet ? (
-          <p>{errorGet}</p>
-        ) : (
-          responseGet && <p>Usuario logueado con éxito.</p>
-        )} */}
       </form>
     </section>
   );

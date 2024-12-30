@@ -8,9 +8,9 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
-      <StrictMode>
-        <App />
-      </StrictMode>
+      {/* <StrictMode> */}
+      <App />
+      {/* </StrictMode> */}
     </AuthProvider>
   </BrowserRouter>
 );

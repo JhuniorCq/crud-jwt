@@ -1,28 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./Profile.css";
-import { usePost } from "../../hooks/usePost";
-import { URL_SERVER } from "../../utils/constants";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 export const Profile = () => {
   const {
     state: { user },
   } = useLocation();
-  const navigate = useNavigate();
-  const { user: userData, setUser } = useContext(AuthContext);
-  const { responsePost, loadingPost, errorPost, postData } = usePost();
+  const { user: userData, logout } = useContext(AuthContext);
 
-  const logout = () => {
-    postData(`${URL_SERVER}/auth/logout`, {}, { withCredentials: true });
-  };
-
-  useEffect(() => {
-    if (responsePost?.success) {
-      setUser(null);
-      navigate("/");
-    }
-  });
+  console.log("Estoy en profile: ", user, userData);
 
   return (
     <section>
