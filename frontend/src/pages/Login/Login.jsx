@@ -1,6 +1,6 @@
 import { InputForm } from "../../components/InputForm/InputForm";
 import { useForm } from "react-hook-form";
-import { useEffect, useId } from "react";
+import { useContext, useEffect, useId } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schemas/userSchema";
 import "./Login.css";
@@ -8,6 +8,7 @@ import { usePost } from "../../hooks/usePost";
 import { URL_SERVER } from "../../utils/constants";
 import { useManualGet } from "../../hooks/useManualGet";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 export const Login = () => {
   const id = useId();
@@ -19,6 +20,7 @@ export const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
+  const { setUser } = useContext(AuthContext);
   const { responsePost, loadingPost, errorPost, postData } = usePost();
   const { responseGet, loadingGet, errorGet, getData } = useManualGet();
 
@@ -30,6 +32,7 @@ export const Login = () => {
       password: data.loginPassword,
     };
 
+    // Puedo hacer el POST y el GET en una sola función, pero ya NO usaría el usePost ni el useManualGet, sino que lo haría manualmente, y creo que esa función la puedo definir en el Contexto "AuthContext"
     postData(`${URL_SERVER}/auth/login`, body, { withCredentials: true });
   };
 
@@ -40,7 +43,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (responsePost?.success) {
-      // Hacemos un GET
+      // Hacemos un GET -> Aunque ya no será necesario, ya que en base a mi código del envio de la cookie, esta siempre debe enviarse, igualmente en la VISTa de /profile puedo verificar esto en el primer renderizado
       getData(`${URL_SERVER}/auth/verify`, { withCredentials: true });
     }
   }, [responsePost]);
@@ -48,6 +51,8 @@ export const Login = () => {
   useEffect(() => {
     if (responseGet?.success) {
       // TODO: Hacer el componente para profile y el botón de Cerrar Sesión
+      console.log(responseGet.data);
+      setUser(responseGet.data);
       navigate("/profile", { state: { user: responseGet.data } });
     }
   }, [responseGet]);
@@ -84,10 +89,16 @@ export const Login = () => {
         ) : errorPost ? (
           <p>{errorPost}</p>
         ) : (
-          responsePost && (
-            <p>Usuario logueado con éxito. En unos instantes serán llevados</p>
-          )
+          responsePost && <p>Usuario logueado con éxito.</p>
         )}
+
+        {/* {loadingGet ? (
+          <p>Verificando ...</p>
+        ) : errorGet ? (
+          <p>{errorGet}</p>
+        ) : (
+          responseGet && <p>Usuario logueado con éxito.</p>
+        )} */}
       </form>
     </section>
   );
