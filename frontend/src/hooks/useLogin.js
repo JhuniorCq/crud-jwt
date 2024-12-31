@@ -39,8 +39,17 @@ export const useLogin = () => {
     }
   };
 
+  const resetStateLogin = () => {
+    setStateLogin({
+      responseLogin: null,
+      loadingLogin: false,
+      errorLogin: null,
+    });
+  };
+
   return {
     login,
+    resetStateLogin,
     ...stateLogin,
   };
 };

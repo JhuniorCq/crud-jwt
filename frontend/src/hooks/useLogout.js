@@ -38,8 +38,17 @@ export const useLogout = () => {
     }
   };
 
+  const resetStateLogout = () => {
+    setStateLogout({
+      responseLogout: null,
+      loadingLogout: false,
+      errorLogout: null,
+    });
+  };
+
   return {
     logout,
+    resetStateLogout,
     ...stateLogout,
   };
 };

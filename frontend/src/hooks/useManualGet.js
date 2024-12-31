@@ -20,12 +20,12 @@ export const useManualGet = () => {
       });
     } catch (error) {
       const errorMessage = error.response?.data.message ?? error.message;
-      console.error("", errorMessage ?? error.message);
+      console.error("", errorMessage);
 
       setStateGet({
         responseGet: null,
         loadingGet: false,
-        errorGet: errorMessage ?? error.message,
+        errorGet: errorMessage,
       });
     }
   };

@@ -71,7 +71,7 @@ class AuthController {
 
       // Si las credenciales son correctas, se genera un token JWT
       const token = TokenService.generate({
-        payload: { id: user.id, username: user.username },
+        payload: user,
       });
 
       res
@@ -108,15 +108,15 @@ class AuthController {
   // Ruta que verifica la existencia de la cookie y la validez del token (solo tiene esos propósitos)
   static async verify(req, res, next) {
     try {
-      const token = req.cookies.access_token;
+      const { access_token } = req.cookies;
 
-      if (!token) {
+      if (!access_token) {
         throw new Error();
       }
-
       // Verifica la validez del token. Si el token es inválido, se lanza automáticamente un error.
-      const user = TokenService.verify({ token });
+      const user = TokenService.verify({ token: access_token });
 
+      console.log("El token es válido: ", access_token);
       res.json({
         success: true,
         data: user,

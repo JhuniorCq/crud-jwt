@@ -12,6 +12,7 @@ export const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
@@ -27,6 +28,8 @@ export const Login = () => {
     };
 
     login({ credentials });
+
+    reset();
   };
 
   const onError = (errors) => {
