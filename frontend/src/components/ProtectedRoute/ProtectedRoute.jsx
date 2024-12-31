@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 export const ProtectedRoute = ({ redirectTo = "/" }) => {
-  const { user, loadingVerify } = useContext(AuthContext);
+  const { user, loadingVerify } = useAuth();
 
   if (loadingVerify) {
     return <div>Cargando ...</div>;

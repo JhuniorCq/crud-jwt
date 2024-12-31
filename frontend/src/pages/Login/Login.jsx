@@ -1,10 +1,10 @@
 import { InputForm } from "../../components/InputForm/InputForm";
 import { useForm } from "react-hook-form";
-import { useContext, useId } from "react";
+import { useId } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schemas/userSchema";
 import "./Login.css";
-import { AuthContext } from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Login = () => {
   const id = useId();
@@ -16,8 +16,7 @@ export const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
-  const { login, responseLogin, loadingLogin, errorLogin } =
-    useContext(AuthContext);
+  const { login, responseLogin, loadingLogin, errorLogin } = useAuth();
 
   const onSubmit = (data) => {
     console.log("Enviando datos... :", data);

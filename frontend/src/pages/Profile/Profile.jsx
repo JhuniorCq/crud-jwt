@@ -1,13 +1,12 @@
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import "./Profile.css";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 export const Profile = () => {
   const {
     state: { user },
   } = useLocation();
-  const { user: userData, logout } = useContext(AuthContext);
+  const { user: userData, logout } = useAuth();
 
   console.log("Estoy en profile: ", user, userData);
 
