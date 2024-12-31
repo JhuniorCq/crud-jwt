@@ -4,7 +4,7 @@ import { URL_SERVER } from "../utils/constants";
 
 export const useGetAllTasks = () => {
   const [stateTasks, setStateTasks] = useState({
-    responseTasks: [],
+    responseTasks: null,
     loadingTasks: true,
     errorTasks: null,
   });
@@ -31,9 +31,9 @@ export const useGetAllTasks = () => {
     }
   };
 
-  useEffect(() => {
-    getTasks();
-  }, []);
+  // useEffect(() => {
+  //   getTasks();
+  // }, []);
 
   return {
     ...stateTasks,
