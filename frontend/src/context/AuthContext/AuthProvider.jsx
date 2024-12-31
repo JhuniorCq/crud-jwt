@@ -6,6 +6,8 @@ import { useLogout } from "../../hooks/useLogout";
 import { URL_SERVER } from "../../utils/constants";
 import { useVerify } from "../../hooks/useVerify";
 
+// Acá también puedo definir al useAuth, en vez de hacerlo afuera en otro archivo
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();

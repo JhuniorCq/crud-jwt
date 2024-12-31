@@ -1,9 +1,11 @@
 import pool from "../config/db.js";
 
 class TaskModel {
-  static async getAllTasks({}) {
+  static async getAllTasks({ idUser }) {
     try {
-      const [tasks] = await pool.query("SELECT * FROM task");
+      const [tasks] = await pool.query("SELECT * FROM task WHERE id_user = ?", [
+        idUser,
+      ]);
 
       return tasks;
     } catch (error) {
@@ -29,11 +31,11 @@ class TaskModel {
     }
   }
 
-  static async createTask({ title, description, date }) {
+  static async createTask({ idUser, title, description, date }) {
     try {
       const [result] = await pool.query(
-        "INSERT INTO task (title, description, date) VALUES (?, ?, ?)",
-        [title, description, date]
+        "INSERT INTO task (title, description, date, id_user) VALUES (?, ?, ?, ?)",
+        [title, description, date, idUser]
       );
 
       if (result.affectedRows === 0) {

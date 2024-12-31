@@ -11,18 +11,20 @@ CREATE TABLE user (
     password VARCHAR(100) NOT NULL
 );
 
-SELECT * FROM user;
-
 CREATE TABLE task (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
-    date DATETIME DEFAULT CURRENT_TIMESTAMP
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_user CHAR(36) NOT NULL
 );
 
-INSERT INTO task (title, description) VALUES ("Tarea 3", "Realizar la tarea número 3.");
+ALTER TABLE task
+ADD CONSTRAINT fk_task_id_user
+FOREIGN KEY (id_user) REFERENCES user(id);
+
+INSERT INTO task (title, description, id_user) VALUES ("Tarea 3", "Realizar la tarea número 3.", "f9a5e880-ebe9-4e84-ba29-3518854b928c");
 
 SELECT * FROM task;
 
 SELECT * FROM user;
-

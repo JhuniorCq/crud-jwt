@@ -1,11 +1,14 @@
 import TaskModel from "../models/task.model.js";
+import TokenService from "../utils/jwt.js";
 import TaskValidations from "../validations/taskValidations.js";
 import dayjs from "dayjs";
 
 class TaskController {
   static async getAllTasks(req, res, next) {
     try {
-      const tasks = await TaskModel.getAllTasks({});
+      const { user } = req.session;
+
+      const tasks = await TaskModel.getAllTasks({ idUser: user.id });
 
       res.json({
         success: true,
@@ -38,6 +41,8 @@ class TaskController {
 
   static async createTask(req, res, next) {
     try {
+      const { user } = req.session;
+
       // Obtener la fecha y hora actual
       const date = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
@@ -55,7 +60,12 @@ class TaskController {
 
       const { title, description } = validatedTask.data;
 
-      const task = await TaskModel.createTask({ title, description, date });
+      const task = await TaskModel.createTask({
+        idUser: user.id,
+        title,
+        description,
+        date,
+      });
 
       res.json({
         success: true,

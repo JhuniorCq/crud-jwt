@@ -4,7 +4,7 @@ import { useId } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schemas/userSchema";
 import "./Login.css";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../context/AuthContext/useAuth";
 
 export const Login = () => {
   const id = useId();
@@ -21,12 +21,7 @@ export const Login = () => {
   const onSubmit = (data) => {
     console.log("Enviando datos... :", data);
 
-    const credentials = {
-      email: data.loginEmail,
-      password: data.loginPassword,
-    };
-
-    login({ credentials });
+    login({ credentials: data });
 
     reset();
   };
@@ -44,7 +39,7 @@ export const Login = () => {
         <InputForm
           label="Correo Electrónico"
           id={`${id}-email`}
-          name="loginEmail"
+          name="email"
           type="email"
           placeholder="Correo electrónico"
           register={register}
@@ -54,7 +49,7 @@ export const Login = () => {
         <InputForm
           label="Contraseña"
           id={`${id}-password`}
-          name="loginPassword"
+          name="password"
           type="password"
           placeholder="Contraseña"
           register={register}

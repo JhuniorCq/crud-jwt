@@ -2,11 +2,11 @@ import TokenService from "../utils/jwt.js";
 
 const validateToken = (req, res, next) => {
   try {
-    const token = req.cookies.access_token;
+    const { access_token } = req.cookies;
 
     req.session = { user: null }; // Esto es para el objeto "session" esté disponible en todas las rutas subsiguientes
 
-    if (!token) {
+    if (!access_token) {
       const error = new Error("Acceso no autorizado.");
       error.statusCode = 401;
       throw error;
@@ -15,7 +15,7 @@ const validateToken = (req, res, next) => {
     console.log("Validando el token ...");
 
     // Verifica la validez del token. Si el token es inválido, se lanza automáticamente un error.
-    const data = TokenService.verify({ token });
+    const data = TokenService.verify({ token: access_token });
 
     // Si el token es válido, los datos decodificados se almacenan en `req.session.user`. Esto permite acceder a la información del usuario en las rutas subsiguientes.
     req.session.user = data;

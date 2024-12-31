@@ -1,14 +1,14 @@
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../context/AuthContext/useAuth";
 import "./Profile.css";
 
 export const Profile = () => {
-  const {
-    state: { user },
-  } = useLocation();
+  // const {
+  //   state: { user },
+  // } = useLocation();
   const { user: userData, logout } = useAuth();
 
-  console.log("Estoy en profile: ", user, userData);
+  console.log("Estoy en profile: ", userData);
 
   // Crear un useEffect que se ejecute en el primer renderizado. Este useEffect debe traer los datos del usuarios, y esta Solicitud HTTP llevará la Cookie con el token de acceso que me dió el Servidor cuando me autentiqué. Si el token es válido, el Servidor me devolverá los datos del usuario. Si el token no es válido, el Servidor me devolverá un error 401.
 
@@ -19,8 +19,8 @@ export const Profile = () => {
       <h1>PERFIL DEL USUARIO</h1>
 
       <div>
-        <p>ID: {user.id}</p>
-        <p>Usuario: {user.username}</p>
+        <p>ID: {userData.id}</p>
+        <p>Usuario: {userData.username}</p>
       </div>
 
       <button onClick={logout}>Cerrar Sesión</button>

@@ -13,6 +13,7 @@ export const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(registerSchema),
   });
@@ -21,15 +22,11 @@ export const Register = () => {
   const onSubmit = (data) => {
     console.log("Enviando datos ...: ", data);
 
-    const body = {
-      username: data.registerUsername,
-      email: data.registerEmail,
-      password: data.registerPassword,
-    };
+    console.log("Body: ", data);
 
-    console.log("Body: ", body);
+    postData(`${URL_SERVER}/auth/register`, data);
 
-    postData(`${URL_SERVER}/auth/register`, body);
+    reset();
   };
 
   const onError = (errors) => {
@@ -49,7 +46,7 @@ export const Register = () => {
           type="text"
           placeholder="Nombre de usuario"
           id={`${id}-username`}
-          name="registerUsername"
+          name="username"
           register={register}
           errors={errors}
         />
@@ -59,7 +56,7 @@ export const Register = () => {
           type="email"
           placeholder="Correo electrónico"
           id={`${id}-email`}
-          name="registerEmail"
+          name="email"
           register={register}
           errors={errors}
         />
@@ -69,7 +66,7 @@ export const Register = () => {
           type="password"
           placeholder="Contraseña"
           id={`${id}-password`}
-          name="registerPassword"
+          name="password"
           register={register}
           errors={errors}
         />
