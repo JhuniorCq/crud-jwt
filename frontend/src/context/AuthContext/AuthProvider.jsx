@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
       resetStateLogout(); // Resetea el estado del logout
     } catch (error) {
       console.error("Error en el logout: ", error.message);
-      setError(error.message);
     }
   };
 
@@ -52,9 +51,11 @@ export const AuthProvider = ({ children }) => {
     const verifyUser = async () => {
       // Hacer una solicitud HTTP a la ruta "/auth/verify" para verificar si el usuario está autenticado. Esta solicitud llevará la Cookie con el token de acceso que me dió el Servidor cuando me autentiqué. Si el token es válido, el Servidor me devolverá los datos del usuario. Si el token no es válido, el Servidor me devolverá un error 401.
       // Si la solicitud es exitosa, entonces el "data" contendrá los datos almacenados en el token. Si la solicitud no es exitosa, entonces el "data" será null.
-      const { data } = await getVerify(`${URL_SERVER}/auth/verify`, {
+      const response = await getVerify(`${URL_SERVER}/auth/verify`, {
         withCredentials: true,
       });
+
+      const data = response?.data;
 
       if (data) {
         setUser(data);
