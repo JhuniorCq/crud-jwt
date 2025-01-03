@@ -94,8 +94,8 @@ class TaskModel {
 
       // Actualizar la tarea
       const [result] = await pool.query(
-        "UPDATE task SET title = ?, description = ?, date = ? WHERE id = ?",
-        [title, description, date, id]
+        "UPDATE task SET title = ?, description = ? WHERE id = ?",
+        [title, description, id]
       );
 
       if (result.affectedRows === 0) {

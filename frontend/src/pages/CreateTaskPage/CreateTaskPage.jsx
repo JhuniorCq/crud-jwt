@@ -38,7 +38,7 @@ export const CreateTaskPage = () => {
     if (responseCreateTask) {
       const timeout = setTimeout(() => {
         resetCreateTask();
-      }, 5000);
+      }, 3000);
 
       return () => clearTimeout(timeout);
     }

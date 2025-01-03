@@ -7,9 +7,9 @@ const taskSchema = z.object({
   description: z
     .string()
     .min(1, { message: "La descripción de la tarea es obligatoria." }),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/, {
-    message: "La fecha debe tener el formato YYYY-MM-DD HH:MM:SS",
-  }),
+  // date: z.string().regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/, {
+  //   message: "La fecha debe tener el formato YYYY-MM-DD HH:MM:SS",
+  // }),
 });
 
 class TaskValidations {

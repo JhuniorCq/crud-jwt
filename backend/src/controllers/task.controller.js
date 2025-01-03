@@ -114,6 +114,7 @@ class TaskController {
       });
 
       if (!validatedTask.success) {
+        console.log(validatedTask.error.issues);
         const error = new Error("Error en la validación de datos.");
         error.statusCode = 400;
         throw error;

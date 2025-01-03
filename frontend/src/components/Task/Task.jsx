@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTasks } from "../../context/TasksContext/useTasks";
 import "./Task.css";
 
@@ -21,7 +22,8 @@ export const Task = ({ id, title, description, date }) => {
     <li className="task">
       <h2 className="task__title">{title}</h2>
       <div className="task__buttons">
-        <button className="task__button">Editar</button>
+        {/* <button className="task__button">Editar</button> */}
+        <Link to={`/tasks/${id}`}>Editar</Link>
         <button className="task__button" onClick={() => deleteTask({ id })}>
           Eliminar
         </button>

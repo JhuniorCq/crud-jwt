@@ -6,6 +6,7 @@ import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import { CreateTaskPage } from "../pages/CreateTaskPage/CreateTaskPage";
 import { TasksProvider } from "../context/TasksContext/TasksProvider";
 import { TasksPage } from "../pages/TasksPage/TasksPage";
+import { UpdateTaskPage } from "../pages/UpdateTaskPage/UpdateTaskPage";
 
 export const MyRoutes = () => {
   return (
@@ -18,6 +19,7 @@ export const MyRoutes = () => {
         <Route element={<ProtectedRoute redirectTo="/" />}>
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/create-task" element={<CreateTaskPage />} />
+          <Route path="/tasks/:id" element={<UpdateTaskPage />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/*" element={<Navigate to="/" />} />

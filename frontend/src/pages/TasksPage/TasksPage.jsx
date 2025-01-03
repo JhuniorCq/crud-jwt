@@ -4,14 +4,11 @@ import "./TasksPage.css";
 import { Task } from "../../components/Task/Task";
 
 export const TasksPage = () => {
-  const { tasks, responseTasks, loadingTasks, errorTasks, getTasks } =
-    useTasks();
+  const { tasks, loadingTasks, errorTasks, getTasks } = useTasks();
 
   useEffect(() => {
     getTasks();
   }, []);
-
-  console.log("Estoy en la Lista de Tareas: ", tasks);
 
   return (
     <section className="tasks-page">

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { URL_SERVER } from "../utils/constants";
 
-export const useDeeleteTask = () => {
+export const useDeleteTask = () => {
   const [stateDeleteTask, setStateDeleteTask] = useState({
     responseDeleteTask: null,
     loadingDeleteTask: false,
