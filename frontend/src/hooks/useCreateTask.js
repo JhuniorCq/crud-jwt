@@ -32,8 +32,17 @@ export const useCreateTask = () => {
     }
   };
 
+  const resetCreateTask = () => {
+    setStateCreateTask({
+      responseCreateTask: null,
+      loadingCreateTask: false,
+      errorCreateTask: null,
+    });
+  };
+
   return {
     ...stateCreateTask,
     createTask,
+    resetCreateTask,
   };
 };

@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await login({ credentials });
       setUser(data);
-      navigate("/profile", { state: { user: data } });
+      navigate("/profile" /*, { state: { user: data } }*/);
       resetStateLogin();
     } catch (error) {
       console.error("Error en el login: ", error.message);

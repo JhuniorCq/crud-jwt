@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <Header />
-      <MyRoutes />
+      <main>
+        <MyRoutes />
+      </main>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import { InputForm } from "../../components/InputForm/InputForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,8 +8,13 @@ import { useTasks } from "../../context/TasksContext/useTasks";
 
 export const CreateTaskPage = () => {
   const id = useId();
-  const { createTask, responseCreateTask, loadingCreateTask, errorCreateTask } =
-    useTasks();
+  const {
+    createTask,
+    responseCreateTask,
+    loadingCreateTask,
+    errorCreateTask,
+    resetCreateTask,
+  } = useTasks();
   const {
     register,
     handleSubmit,
@@ -19,15 +24,25 @@ export const CreateTaskPage = () => {
     resolver: zodResolver(taskSchema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Creando una tarea: ", data);
-    createTask({ task: data });
+    await createTask({ task: data });
     reset();
   };
 
   const onError = (errors) => {
     alert("Por favor, complete correctamente los campos.");
   };
+
+  useEffect(() => {
+    if (responseCreateTask) {
+      const timeout = setTimeout(() => {
+        resetCreateTask();
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [responseCreateTask]);
 
   return (
     <section>
@@ -55,6 +70,14 @@ export const CreateTaskPage = () => {
         />
 
         <button>Crear Tarea</button>
+
+        {loadingCreateTask ? (
+          <div>Creando la tarea ...</div>
+        ) : errorCreateTask ? (
+          <div>{errorCreateTask}</div>
+        ) : (
+          responseCreateTask && <div>Tarea creada con éxito.</div>
+        )}
       </form>
     </section>
   );

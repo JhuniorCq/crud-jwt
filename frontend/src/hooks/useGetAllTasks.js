@@ -21,6 +21,8 @@ export const useGetAllTasks = () => {
         loadingTasks: false,
         errorTasks: null,
       });
+
+      return data;
     } catch (error) {
       const errorMessage = error.response?.data.message ?? error.message;
       setStateTasks({
@@ -28,12 +30,10 @@ export const useGetAllTasks = () => {
         loadingTasks: false,
         errorTasks: errorMessage,
       });
+
+      return null;
     }
   };
-
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
 
   return {
     ...stateTasks,

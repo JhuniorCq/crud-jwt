@@ -1,4 +1,5 @@
 import TaskModel from "../models/task.model.js";
+import { formatDate } from "../utils/date.js";
 import TokenService from "../utils/jwt.js";
 import TaskValidations from "../validations/taskValidations.js";
 import dayjs from "dayjs";
@@ -9,6 +10,9 @@ class TaskController {
       const { user } = req.session;
 
       const tasks = await TaskModel.getAllTasks({ idUser: user.id });
+
+      // Formateando las fechas a YYYY-MM-DD HH:mm:ss
+      tasks.forEach((task) => (task.date = formatDate(task.date)));
 
       res.json({
         success: true,

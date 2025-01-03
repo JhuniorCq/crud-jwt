@@ -5,3 +5,7 @@
   min-height: 100vh;
   background-color: lightgreen;
 }
+
+main {
+  padding: 0 100px;
+}
